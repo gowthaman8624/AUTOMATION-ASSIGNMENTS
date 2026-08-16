@@ -1,0 +1,28 @@
+package corejavabasics;
+
+class Animal{
+	 void sound() {
+	        System.out.println("Animal makes a sound");
+	    }
+
+	    void sleep() {
+	        System.out.println("Animal is sleeping");
+	    }
+
+	    void walk() {
+	        System.out.println("Animal is walking");
+	    }
+}
+
+public class Cat extends Animal {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Cat d = new Cat();
+		d.sound();
+    d.sleep();
+    d.walk();
+
+	}
+
+}
