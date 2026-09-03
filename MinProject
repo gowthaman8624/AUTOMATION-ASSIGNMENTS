@@ -1,0 +1,71 @@
+package MinProj;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class PetStoreFish {
+	static WebDriver driver;
+	static String url ="https://petstore.octoperf.com/actions/Catalog.action";
+	static String fish_xpath = "//div[@id='SidebarContent']/a[1]";
+	static String Product_xpath = "//tbody//tr[5]//td[1]//a[1]";
+	static String AddtoCart_xpath = "//tbody//tr[2]//td[5]//a[1]";
+	static String Qtyclr_css="input[name='EST-20']";
+	static String UpdateCart_xpath="//input[contains(@value,'Cart')]";
+	static String ProCheck_xpath="//a[contains(text(),'Check')]";
+	
+	public static void verifyURL(String partOfURL,String page) {
+		String actURL = driver.getCurrentUrl();
+		if(actURL.contains(partOfURL)) {
+			System.out.println(page + ": Pass");
+		}else {
+			System.out.println(page + ": Fail");
+		}
+	}
+	
+	public static void Setup() {
+		driver = new ChromeDriver();
+		driver.get(url);
+		
+	}
+	public static void SelectFish() {
+		driver.findElement(By.xpath(fish_xpath)).click();
+		verifyURL("categoryId=FISH","HomePage");
+		
+	}
+	public static void productSelect() {
+		driver.findElement(By.xpath(Product_xpath)).click();
+		verifyURL("=FI-FW-02","ProductPage");
+	}
+	public static void Addtocart() {
+		driver.findElement(By.xpath(AddtoCart_xpath)).click();
+		verifyURL("workingItemId=EST-20","CartSelectPage");
+	}
+	public static void QtyClr() {
+		driver.findElement(By.cssSelector(Qtyclr_css)).clear();
+		driver.findElement(By.cssSelector(Qtyclr_css)).sendKeys("2");
+		verifyURL("workingItemId=EST-20","QuantitySelectPage");
+	}
+	public static void UpdateCart() {
+		driver.findElement(By.xpath(UpdateCart_xpath)).click();
+		verifyURL("workingItemId=EST-20","UpdateSelectPage");
+	}
+	public static void Proceed() {
+		driver.findElement(By.xpath(ProCheck_xpath)).click();
+		verifyURL("newOrderForm=","QuantitySelectPage");
+	}
+	public static void teardown() {
+		driver.quit();
+	}
+
+	public static void main(String[] args) {
+		Setup();
+		SelectFish();
+		productSelect();
+		Addtocart();
+		QtyClr();
+		UpdateCart();
+		Proceed();
+		teardown();
+	}
+}
