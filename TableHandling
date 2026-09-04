@@ -40,3 +40,30 @@ First Name Last Name Age Email Salary Department Action
 Cierra Vega 39 cierra@example.com 10000 Insurance  
 Alden Cantrell 45 alden@example.com 12000 Compliance  
 Kierra Gentry 29 kierra@example.com 2000 Legal  
+
+_____________________________________________________________________________________
+
+
+
+------------------------ RelativeLocator ----------------------
+package Assignments;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.locators.RelativeLocator;
+
+public class RelatLoca {
+
+	public static void main(String[] args) {
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://demoqa.com/text-box");
+		driver.manage().window().maximize();
+		WebElement txtbox = driver.findElement(By.cssSelector("#permanentAddress"));
+		txtbox.sendKeys("SLA Institute,"+ "KK Nagar,"+ "Chennai.");
+		WebElement button = driver.findElement(RelativeLocator.with(By.tagName("button")).below(txtbox));
+		button.click();
+
+	}
+}
