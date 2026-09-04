@@ -69,3 +69,11 @@ public class PetStoreFish {
 		teardown();
 	}
 }
+
+---------------------- OUTPUT -------------------------
+HomePage: Pass
+ProductPage: Pass
+CartSelectPage: Pass
+QuantitySelectPage: Pass
+UpdateSelectPage: Pass
+QuantitySelectPage: Pass
