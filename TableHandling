@@ -1,0 +1,42 @@
+------------------------ TableHandling --------------------------
+package Assignments;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class TableHandle {
+
+	public static void main(String[] args) {
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://demoqa.com/webtables");
+		driver.manage().window().maximize();
+		WebElement table = driver.findElement(By.xpath("//table"));
+		List<WebElement> rows = table.findElements(By.xpath("//tr"));
+		for(WebElement row:rows) {
+			List<WebElement> headers = row.findElements(By.tagName("th"));
+			List<WebElement> cells = row.findElements(By.tagName("td"));
+			for(WebElement header:headers) {
+				System.out.print(header.getText()+" ");
+			}
+			for(WebElement cell:cells) {
+				String data = cell.getText();
+				System.out.print(data+" ");
+			}
+			System.out.println();
+			
+	}
+		driver.quit();
+
+}
+}
+
+--------------------- OUTPUT -----------------------------
+
+First Name Last Name Age Email Salary Department Action 
+Cierra Vega 39 cierra@example.com 10000 Insurance  
+Alden Cantrell 45 alden@example.com 12000 Compliance  
+Kierra Gentry 29 kierra@example.com 2000 Legal  
