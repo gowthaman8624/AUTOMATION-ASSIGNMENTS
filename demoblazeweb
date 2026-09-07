@@ -1,0 +1,97 @@
+package MinProj;
+
+import java.time.Duration;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class BlazaWeb {
+	static WebDriver driver;
+	static Actions action ;
+	static String url =" https://www.demoblaze.com/";
+	static String SelLaptop = "//a[text()='Laptops']";
+	static String selProd = "//a[text()='MacBook Pro']";
+	static String addcart = "//a[@onclick='addToCart(15)']";
+	static String gotocart= "//div//ul//li[4]//a";
+	static String plaorder= "//button[text()='Place Order']";
+	static String close = "//button[@onclick='purchaseOrder()']";
+	
+	public static void verifyURL(String partOfURL,String page) {
+		String actURL = driver.getCurrentUrl();
+		if(actURL.contains(partOfURL)) {
+			System.out.println(page + ": Pass");
+		}else {
+			System.out.println(page + ": Fail");
+		}
+	}
+	
+	public static void alert() {
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+	     Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+	     alert.accept();
+	     System.out.println("Alert Accepted");
+	}
+	public static void setup() {
+		driver= new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get(url);
+		verifyURL("blaze.com/","home page");
+	}
+	
+	public static void selapbut() {
+		driver.findElement(By.xpath(SelLaptop)).click();
+		verifyURL("blaze.com/#","laptop Select");
+	}
+	
+	public static void selproduct() {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		WebElement d=driver.findElement(By.xpath(selProd));
+		action = new Actions(driver);
+		action.scrollToElement(d).click(d).perform(); 
+		verifyURL("prod.html?idp_=15","ProductSelect");
+	}
+	
+	public static void addtocart() {
+		driver.findElement(By.xpath(addcart)).click();
+		alert();
+		verifyURL("prod.html?idp_=15#","AddToCart");
+	}
+	
+	public static void GoToCart() {
+		driver.findElement(By.xpath(gotocart)).click();
+		verifyURL("cart.html","cartpage");
+	}
+	
+	public static void PlaceOrder() {
+		driver.findElement(By.xpath(plaorder)).click();
+		verifyURL("cart.html","Placeorder");
+		driver.findElement(By.xpath(close)).click();
+		driver.quit();
+	}
+	
+	public static void main(String[] args) {
+		setup();
+		selapbut();
+		selproduct();
+		addtocart();
+		GoToCart();
+		PlaceOrder();
+		
+	}
+
+	}
+------------------- Output -----------------------
+home page: Pass
+laptop Select: Pass
+ProductSelect: Pass
+Alert Accepted
+AddToCart: Pass
+cartpage: Pass
+Placeorder: Pass
+
