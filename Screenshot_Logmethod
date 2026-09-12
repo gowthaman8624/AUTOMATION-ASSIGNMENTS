@@ -1,0 +1,67 @@
+package Assignments;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import LogHandling.LogHan;
+import sun.util.logging.resources.logging;
+
+public class Snap {
+	static WebDriver driver;
+	static TakesScreenshot sh;
+	static String url;
+	static String path;
+	static String path1;
+	static File dest;
+	static File src;
+	
+	public static void file(String logfile,String logmsg) throws SecurityException, IOException {
+		logfile= "C:\\Users\\as169\\eclipse-workspace\\SelePrgram\\Logfile\\Screenshot file";
+		Logger log =  Logger.getLogger(LogHan.class.getName());
+		FileHandler fh= new FileHandler(logfile,true);
+		fh.setFormatter(new SimpleFormatter());
+		log.addHandler(fh);
+		log.info(logmsg);
+		fh.close();
+	}
+	
+	
+	public static void takeScreenshot(String filename) throws IOException {
+		File dest = new File(path+filename);
+		File src =sh.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(src,dest);
+	}
+
+	public static void main(String[] args) throws IOException {
+		url = "https://www.tutorialspoint.com/selenium/practice/webtables.php";
+		path ="C:\\Users\\as169\\eclipse-workspace\\SelePrgram\\Screenshots\\";
+		
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get(url);
+		file("logfile","url got successfully");
+		
+		sh = (TakesScreenshot) driver;
+		takeScreenshot("Snap1.png");
+		file("logfile","Screenshot FullScreen captured");
+		
+		
+		WebElement table = driver.findElement(By.xpath("//table"));
+		sh = (TakesScreenshot) table;
+		takeScreenshot("Snap2.png");
+		file("logfile","table captured successfully");
+		file("logfile","Log Files Handle Successfully");
+		
+	}
+}
