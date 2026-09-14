@@ -1,0 +1,37 @@
+package Assignment;
+
+import org.testng.annotations.Test;
+
+public class ATMFlow {
+	  @Test(priority = 1)
+	    public void testInsertCard() {
+	        System.out.println("1. Card inserted successfully");
+	    }
+
+	    @Test(priority = 2, dependsOnMethods = "testInsertCard")
+	    public void testReadCard() {
+	        System.out.println("2. Card read successfully");
+	    }
+
+	    @Test(priority = 3, dependsOnMethods = "testReadCard")
+	    public void testCheckBalance() {
+	        System.out.println("3. Balance checked successfully");
+	    }
+
+	    @Test(priority = 4, dependsOnMethods = "testCheckBalance")
+	    public void testWithdraw() {
+	        System.out.println("4. Amount withdrawn successfully");
+	    }
+
+	    @Test(priority = 5, dependsOnMethods = "testWithdraw")
+	    public void testCardOut() {
+	        System.out.println("5. Card ejected successfully");
+	    }
+	}
+
+--------------------------- OUTPUT ---------------------------------
+1. Card inserted successfully
+2. Card read successfully
+3. Balance checked successfully
+4. Amount withdrawn successfully
+5. Card ejected successfully
